@@ -25,62 +25,59 @@
       height: 500px;
     }
 
-    #estimate {
-      margin-right: 90px;
-    }
-
   </style>
 
 </head>
 
 <body>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-2">
-        <h4>Day</h4>
-      </div>
-      <div class="col-sm-2">
-        <h4>Proj Time Estimate</h4>
-      </div>
-      <div class="col-sm-2">
-        <h4>Per Time Estimate</h4>
-      </div>
-      <div class="col-sm-2">
-        <h4>Overtime</h4>
-      </div>
-      <div class="col-sm-2">
-        <h4>Elapsed Time</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">
-        <div class="days">Thursday</div>
-        <div class="days">Friday</div>
-        <div class="days">Saturday</div>
-        <div class="days">Sunday</div>
-        <div class="days">Monday</div>
-        <div class="days">Tuesday</div>
-        <div class="days">Wednesday</div>
-        <div class="days">Thursday</div>
-        <div class="days">Friday</div>
-        <div class="days">Saturday</div>
-        <div class="days">Sunday</div>
-        <div class="days">Monday</div>
-        <div class="days">Tuesday</div>
-      </div>
-      <div id="estimate">
-        <canvas class="bar"></canvas>
-      </div>
-      <div id="time">
-        <canvas class="bar"></canvas>
-      </div>
-      <div id="over">
-        <canvas class="bar"></canvas>
-      </div>
-      <div id="elapsed">
-        <canvas class="bar"></canvas>
-      </div>
-    </div>
+    <table>
+      <tr>
+        <th>
+          <h4>Day</h4>
+        </th>
+        <th>
+          <h4>Proj Time Estimate</h4>
+        </th>
+        <th>
+          <h4>Personal Time Est</h4>
+        </th>
+        <th>
+          <h4>Overtime</h4>
+        </th>
+        <th>
+          <h4>Elapsed Time</h4>
+      </tr>
+      <tr>
+        <td>
+          <div class="days">Thursday</div>
+          <div class="days">Friday</div>
+          <div class="days">Saturday</div>
+          <div class="days">Sunday</div>
+          <div class="days">Monday</div>
+          <div class="days">Tuesday</div>
+          <div class="days">Wednesday</div>
+          <div class="days">Thursday</div>
+          <div class="days">Friday</div>
+          <div class="days">Saturday</div>
+          <div class="days">Sunday</div>
+          <div class="days">Monday</div>
+          <div class="days">Tuesday</div>
+        </td>
+        <td id="estimate">
+          <canvas class="bar"></canvas>
+        </td>
+        <td id="time">
+          <canvas class="bar"></canvas>
+        </td>
+        <td id="over">
+          <canvas class="bar"></canvas>
+        </td>
+        <td id="elapsed">
+          <canvas class="bar"></canvas>
+        </td>
+      </tr>
+    </table>
   </div>
 
 
@@ -127,13 +124,18 @@
     var canvasA = projectContainer.children()[0];
     $(canvasA).prop('width', 100)
     $(canvasA).prop('height', 6500)
-    
+
     var personalContainer = $('#time');
     var canvasT = personalContainer.children()[0];
     $(canvasT).prop('width', 100)
     $(canvasT).prop('height', 6500)
-    
-    
+
+    var overtimeContainer = $('#over');
+    var canvasO = overtimeContainer.children()[0];
+    $(canvasO).prop('width', 100)
+    $(canvasO).prop('height', 6500)
+
+
     //  drawContinuous(canvasA, 3000, "#74fafd", 0, "techDesign");
     //  drawContinuous(canvasA, 3000, "#bbb", 3000, "buildCode");
 
@@ -308,12 +310,27 @@
       }
     }
 
+    function graphOvertime(canvas, array) {
+
+      for (var i = 0; i < array.length; i++) {
+        var barHeight = array[i]["day"];
+        var c = 0;
+
+        for (var key in array[i]["hours"]) {
+          drawContinuous(canvas, (array[i]["hours"][key] * 55.55), colorVariations[c], barHeight, key.toString());
+          barHeight += (array[i]["hours"][key] * 55.55);
+          c++;
+        }
+      }
+    }
+
     graphIt(canvasA, projectTime);
     graphIt(canvasT, personalTime);
+    graphOvertime(canvasO, overtime);
     var container = $('#elapsed');
     var canvas2 = container.children()[0];
     $(canvas2).prop('width', 100)
-    $(canvas2).prop('height', currentHeight)
+    $(canvas2).prop('height', 6500)
     draw(canvas2, currentHeight, "#FF0000");
 
   </script>

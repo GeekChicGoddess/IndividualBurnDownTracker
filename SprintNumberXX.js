@@ -27,4 +27,19 @@
     fixBugs: 4,      
     fixBugsaaa: 5   
   }
+    
+  var overtime = [
+    {day: 2500,
+    hours: {
+      codeBuild: 1,
+      othOver: .5}
+    },
+    {
+    day: 3000,  
+    hours: {
+      componentTesting: 1,
+      review: .75
+    }
+    }
+  ]
   
